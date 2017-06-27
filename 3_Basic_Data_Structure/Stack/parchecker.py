@@ -17,25 +17,59 @@ class Stack():
     def size(self):
         return len(self.items)
 
+# def parchecker(parstr):
+#     s = Stack()
+#     index = 0
+#     balance = True
+#     while index < len(parstr) and balance:
+#         if parstr[index] == "(":
+#             s.push(parstr[index])
+#         else:
+#             if s.isEmpty():
+#                 balance = False
+#             else:
+#                 s.pop()
+#         index += 1
+#     if balance and s.isEmpty():
+#         return True
+#     else:
+#         return False
+#
+# print parchecker('   ')
+# print parchecker('((()))')
+# print parchecker('(((())')
+# print parchecker('(())')
+
+def matches(open, close):
+    opens = '([{'
+    closers = ')]}'
+    return opens.index(open) == closers.index(close)
+
 def parchecker(parstr):
     s = Stack()
     index = 0
     balance = True
     while index < len(parstr) and balance:
-        if parstr[index] == "(":
-            s.push(parstr[index])
+        symbol = parstr[index]
+        if symbol in '([{':
+            s.push(symbol)
         else:
             if s.isEmpty():
                 balance = False
             else:
-                s.pop()
+                top = s.pop()
+                if not matches(top, symbol):
+                    balance = False
         index += 1
+
     if balance and s.isEmpty():
         return True
     else:
         return False
 
-print parchecker('   ')
-print parchecker('((()))')
-print parchecker('(((())')
-print parchecker('(())')
+
+
+print parchecker('')
+print parchecker('[{}]{}()')
+print parchecker('(({[]}))')
+print parchecker('{{{{{)))}}')
